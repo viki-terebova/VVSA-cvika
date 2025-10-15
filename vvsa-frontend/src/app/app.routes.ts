@@ -2,6 +2,11 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
     {
+        path: '',
+        loadComponent: () =>
+        import('./dashboard/dashboard/dashboard').then(m => m.Dashboard)
+    },
+    {
         path: 'dashboard',
         loadComponent: () =>
         import('./dashboard/dashboard/dashboard').then(m => m.Dashboard)
@@ -17,8 +22,8 @@ export const routes: Routes = [
         import('./basic-accounts/basic-account-detail/basic-account-detail').then(m => m.BasicAccountDetail)
     },
     {
-    path: '**',
-    loadComponent: () =>
-        import('./app/app').then(m => m.App)
-}
+        path: '**',
+        loadComponent: () =>
+        import('./dashboard/dashboard/dashboard').then(m => m.Dashboard)
+    }
 ];

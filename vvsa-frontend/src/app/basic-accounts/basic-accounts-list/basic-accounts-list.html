@@ -1,1 +1,38 @@
-<p>basic-accounts-list works!</p>
+<h1>Basic Accounts (Transactions)</h1>
+
+@if (transactions$ | async; as res) {
+  @if (res.data.length === 0) {
+    <p>No transactions found.</p>
+  } @else {
+    <table border="1" cellpadding="6" cellspacing="0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Full name</th>
+          <th>Type</th>
+          <th>Account</th>
+          <th>Bank</th>
+          <th>Issue date</th>
+          <th>Amount</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of res.data; track item.transactionId) {
+          <tr>
+            <td>{{ item.transactionId }}</td>
+            <td>{{ item.fullName }}</td>
+            <td>{{ item.transactionType | transactionType }}</td>
+            <td>{{ item.accountNumber }}</td>
+            <td>{{ item.bankCode }}</td>
+            <td>{{ item.issueDate | date:'yyyy-MM-dd HH:mm' }}</td>
+            <td>{{ item.amount | number:'1.2-2' }}</td>
+            <td><a [routerLink]="['/basic-accounts/detail', item.transactionId]">Detail</a></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+} @else {
+  <p>Loading…</p>
+}

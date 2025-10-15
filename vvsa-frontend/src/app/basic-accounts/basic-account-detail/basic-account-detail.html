@@ -1,6 +1,17 @@
-<p>basic-account-detail works!</p>
-<p>Detail for account with id: {{ id }}</p>
+<a routerLink="/basic-accounts">← Back</a>
+<h1>Account Detail</h1>
 
+@if (tx$ | async; as res) {
+  <div>
+    <p><strong>ID:</strong> {{ res.data.transactionId }}</p>
+    <p><strong>Full name:</strong> {{ res.data.fullName }}</p>
+    <p><strong>Type:</strong> {{ res.data.transactionType | transactionType }}</p>
+    <p><strong>Account:</strong> {{ res.data.accountNumber }}</p>
+    <p><strong>Bank:</strong> {{ res.data.bankCode }}</p>
+    <p><strong>Issue date:</strong> {{ res.data.issueDate | date:'yyyy-MM-dd HH:mm' }}</p>
+    <p><strong>Amount:</strong> {{ res.data.amount | number:'1.2-2' }}</p>
+  </div>
+}
 
 <app-basic-detail></app-basic-detail>
 <app-withdrawal-detail [id]="id"></app-withdrawal-detail>
