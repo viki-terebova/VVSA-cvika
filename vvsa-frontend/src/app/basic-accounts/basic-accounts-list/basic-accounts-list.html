@@ -1,38 +1,61 @@
 <h1>Basic Accounts (Transactions)</h1>
 
-@if (transactions$ | async; as res) {
-  @if (res.data.length === 0) {
-    <p>No transactions found.</p>
-  } @else {
-    <table border="1" cellpadding="6" cellspacing="0">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Full name</th>
-          <th>Type</th>
-          <th>Account</th>
-          <th>Bank</th>
-          <th>Issue date</th>
-          <th>Amount</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (item of res.data; track item.transactionId) {
-          <tr>
-            <td>{{ item.transactionId }}</td>
-            <td>{{ item.fullName }}</td>
-            <td>{{ item.transactionType | transactionType }}</td>
-            <td>{{ item.accountNumber }}</td>
-            <td>{{ item.bankCode }}</td>
-            <td>{{ item.issueDate | date:'yyyy-MM-dd HH:mm' }}</td>
-            <td>{{ item.amount | number:'1.2-2' }}</td>
-            <td><a [routerLink]="['/basic-accounts/detail', item.transactionId]">Detail</a></td>
-          </tr>
-        }
-      </tbody>
-    </table>
-  }
-} @else {
-  <p>Loading…</p>
-}
+<div class="table-wrapper">
+  <table mat-table [dataSource]="dataSource" matSort matSortDisableClear>
+    <!-- ID Column -->
+    <ng-container matColumnDef="transactionId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let row">{{ row.transactionId }}</td>
+    </ng-container>
+
+    <!-- Full name Column -->
+    <ng-container matColumnDef="fullName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Full name</th>
+      <td mat-cell *matCellDef="let row">{{ row.fullName }}</td>
+    </ng-container>
+
+    <!-- Type Column -->
+    <ng-container matColumnDef="transactionType">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
+      <td mat-cell *matCellDef="let row">{{ row.transactionType | transactionType }}</td>
+    </ng-container>
+
+    <!-- Account Column -->
+    <ng-container matColumnDef="accountNumber">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Account</th>
+      <td mat-cell *matCellDef="let row">{{ row.accountNumber }}</td>
+    </ng-container>
+
+    <!-- Bank Column -->
+    <ng-container matColumnDef="bankCode">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Bank</th>
+      <td mat-cell *matCellDef="let row">{{ row.bankCode }}</td>
+    </ng-container>
+
+    <!-- Issue date Column -->
+    <ng-container matColumnDef="issueDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Issue date</th>
+      <td mat-cell *matCellDef="let row">{{ row.issueDate | date:'yyyy-MM-dd HH:mm' }}</td>
+    </ng-container>
+
+    <!-- Amount Column -->
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
+      <td mat-cell *matCellDef="let row">{{ row.amount | number:'1.2-2' }}</td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-stroked-button color="primary" [routerLink]="['/basic-accounts/detail', row.transactionId]">
+          <mat-icon>open_in_new</mat-icon>
+          Detail
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

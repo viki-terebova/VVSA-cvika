@@ -1,0 +1,27 @@
+h1 {
+  margin-top: 0;
+}
+
+.table-wrapper {
+  overflow: auto;
+  background: var(--mat-sys-surface);
+  border-radius: 12px;
+  padding: 8px;
+  box-shadow: var(--mat-sys-level1);
+}
+
+table {
+  width: 100%;
+}
+
+th.mat-mdc-header-cell, td.mat-mdc-cell {
+  white-space: nowrap;
+}
+
+td.mat-mdc-cell:last-child, th.mat-mdc-header-cell:last-child {
+  text-align: right;
+}
+
+mat-form-field {
+  margin: 8px 0 16px;
+}
