@@ -1,0 +1,6 @@
+.detail-card {
+  border: 1px solid #000000;
+  border-radius: 8px;
+  padding: 12px;
+  max-width: 300px;
+}

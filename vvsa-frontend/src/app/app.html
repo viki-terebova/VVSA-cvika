@@ -1,23 +1,31 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button [matMenuTriggerFor]="appMenu" aria-label="Open menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span class="app-title">{{ title() }}</span>
+  <span class="spacer"></span>
+  <button mat-button routerLink="/dashboard">
+    <mat-icon>dashboard</mat-icon>
+    Dashboard
+  </button>
+  <button mat-button routerLink="/basic-accounts">
+    <mat-icon>account_balance</mat-icon>
+    Accounts
+  </button>
+</mat-toolbar>
 
-<div class="content">
-  <a routerLink="/dashboard">
-  link to dashboard component
-  </a>
-</div>
-<div class="content">
-  <a routerLink="/basic-accounts">
-  link to basic accounts component
-  </a>
-</div>
-<div class="content">
-  <a routerLink="/basic-accounts">
-  link to basic accounts list component
-  </a>
-</div>
-<div class="content">
-  <a routerLink="/basic-accounts/detail/1">
-  link to basic accounts detail component with id 1
-  </a>
-</div>
+<mat-menu #appMenu="matMenu">
+  <button mat-menu-item routerLink="/dashboard">
+    <mat-icon>dashboard</mat-icon>
+    <span>Dashboard</span>
+  </button>
+  <button mat-menu-item routerLink="/basic-accounts">
+    <mat-icon>list</mat-icon>
+    <span>Transactions</span>
+  </button>
+  
+</mat-menu>
 
-<router-outlet></router-outlet>
+<div class="page-container">
+  <router-outlet></router-outlet>
+</div>

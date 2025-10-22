@@ -6,12 +6,14 @@ import { AsyncPipe, DatePipe, DecimalPipe } from '@angular/common';
 import { switchMap } from 'rxjs/operators';
 import { TransactionsService } from '../../api/transactions.service';
 import { TransactionTypePipe } from '../../utils/pipes/transaction-type.pipe';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @Component({
   selector: 'app-basic-account-detail',
   standalone: true,
-  imports: [BasicDetail, WithdrawalDetail, RouterLink, AsyncPipe, DatePipe, DecimalPipe, TransactionTypePipe],
+  imports: [BasicDetail, WithdrawalDetail, RouterLink, AsyncPipe, DatePipe, DecimalPipe, TransactionTypePipe, MatButtonModule, MatIconModule],
   templateUrl: './basic-account-detail.html',
   styleUrl: './basic-account-detail.css'
 })

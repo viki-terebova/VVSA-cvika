@@ -4,7 +4,7 @@ export const routes: Routes = [
     {
         path: '',
         loadComponent: () =>
-        import('./dashboard/dashboard/dashboard').then(m => m.Dashboard)
+        import('./app/app').then(m => m.App)
     },
     {
         path: 'dashboard',
@@ -24,6 +24,6 @@ export const routes: Routes = [
     {
         path: '**',
         loadComponent: () =>
-        import('./dashboard/dashboard/dashboard').then(m => m.Dashboard)
+        import('./app/app').then(m => m.App)
     }
 ];

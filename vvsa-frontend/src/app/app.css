@@ -1,0 +1,22 @@
+mat-toolbar {
+  display: flex;
+}
+
+.app-title {
+  margin-left: 8px;
+  font-weight: 500;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.page-container {
+  padding: 16px;
+}
+
+.links-demo {
+  margin-top: 16px;
+  display: flex;
+  gap: 12px;
+}
