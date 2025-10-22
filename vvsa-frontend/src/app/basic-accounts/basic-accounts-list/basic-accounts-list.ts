@@ -50,19 +50,16 @@ export class BasicAccountsList implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngOnInit(): void {
-    // Load data into the Material data source
     this.transactions$.subscribe((res) => {
       this.dataSource.data = res.data;
       if (this.sort) this.dataSource.sort = this.sort;
       if (this.paginator) this.dataSource.paginator = this.paginator;
-      // Default filter predicate: search across stringified row
       this.dataSource.filterPredicate = (data, filter) =>
         JSON.stringify(data).toLowerCase().includes(filter.trim().toLowerCase());
     });
   }
 
   ngAfterViewInit(): void {
-    // Attach sort and paginator once view children are ready
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }

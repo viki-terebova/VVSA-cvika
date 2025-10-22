@@ -5,10 +5,10 @@ import { Observable } from 'rxjs';
 export interface ITransaction {
   transactionId: string;
   fullName: string;
-  transactionType: number; // 0, 1, ... per assignment mapping
+  transactionType: number;
   accountNumber: string;
   bankCode: string;
-  issueDate: string; // ISO date string
+  issueDate: string;
   amount: number;
 }
 

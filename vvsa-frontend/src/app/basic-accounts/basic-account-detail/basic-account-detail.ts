@@ -8,12 +8,28 @@ import { TransactionsService } from '../../api/transactions.service';
 import { TransactionTypePipe } from '../../utils/pipes/transaction-type.pipe';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatChipsModule } from '@angular/material/chips';
 
 
 @Component({
   selector: 'app-basic-account-detail',
   standalone: true,
-  imports: [BasicDetail, WithdrawalDetail, RouterLink, AsyncPipe, DatePipe, DecimalPipe, TransactionTypePipe, MatButtonModule, MatIconModule],
+  imports: [
+    BasicDetail,
+    WithdrawalDetail,
+    RouterLink,
+    AsyncPipe,
+    DatePipe,
+    DecimalPipe,
+    TransactionTypePipe,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatDividerModule,
+    MatChipsModule
+  ],
   templateUrl: './basic-account-detail.html',
   styleUrl: './basic-account-detail.css'
 })
