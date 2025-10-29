@@ -1,4 +1,4 @@
-<div class="detail-page">
+﻿<div class="detail-page">
   @if (tx$ | async; as res) {
     <mat-card class="detail-card">
       <div class="card-header">
@@ -6,11 +6,9 @@
           <div class="avatar"><mat-icon>receipt_long</mat-icon></div>
           <div class="titles">
             <div class="title">Transaction #{{ res.data.transactionId }}</div>
-            <div class="subtitle">{{ res.data.fullName }}</div>
           </div>
         </div>
         <div class="right">
-          <div class="amount" [class.negative]="res.data.amount < 0">{{ res.data.amount | number:'1.2-2' }}</div>
           <label>{{ res.data.transactionType | transactionType }}</label>
         </div>
       </div>
@@ -18,20 +16,34 @@
       <mat-divider></mat-divider>
 
       <mat-card-content>
-        <div class="grid">
-          <div class="field">
-            <span class="label">Account: </span>
-            <span class="value mono">{{ res.data.accountNumber }}</span>
-          </div>
-          <div class="field">
-            <span class="label">Bank: </span>
-            <span class="value">{{ res.data.bankCode }}</span>
-          </div>
-          <div class="field">
-            <span class="label">Issue date: </span>
-            <span class="value">{{ res.data.issueDate | date:'yyyy-MM-dd HH:mm' }}</span>
-          </div>
-        </div>
+        <form [formGroup]="form" class="grid">
+          <mat-form-field class="field" appearance="fill">
+            <mat-label>Full name</mat-label>
+            <input matInput formControlName="fullName" />
+          </mat-form-field>
+
+          <mat-form-field class="field" appearance="fill">
+            <mat-label>Account number</mat-label>
+            <input matInput formControlName="accountNumber" />
+          </mat-form-field>
+
+          <mat-form-field class="field" appearance="fill">
+            <mat-label>Bank code</mat-label>
+            <input matInput formControlName="bankCode" />
+          </mat-form-field>
+
+          <mat-form-field class="field" appearance="fill">
+            <mat-label>Issue date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="issueDate" />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field class="field" appearance="fill">
+            <mat-label>Amount</mat-label>
+            <input matInput type="number" formControlName="amount" />
+          </mat-form-field>
+        </form>
       </mat-card-content>
 
       <mat-card-actions align="end">

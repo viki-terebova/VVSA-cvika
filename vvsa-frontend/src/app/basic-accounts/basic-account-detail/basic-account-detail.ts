@@ -1,9 +1,9 @@
-import { Component, inject } from '@angular/core';
+﻿import { Component, inject } from '@angular/core';
 import { BasicDetail } from '../basic-detail/basic-detail';
 import { WithdrawalDetail } from '../withdrawal-detail/withdrawal-detail';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { AsyncPipe, DatePipe, DecimalPipe } from '@angular/common';
-import { switchMap } from 'rxjs/operators';
+import { AsyncPipe, DatePipe } from '@angular/common';
+import { switchMap, tap } from 'rxjs/operators';
 import { TransactionsService } from '../../api/transactions.service';
 import { TransactionTypePipe } from '../../utils/pipes/transaction-type.pipe';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,7 +11,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatChipsModule } from '@angular/material/chips';
-
+import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-basic-account-detail',
@@ -21,14 +25,17 @@ import { MatChipsModule } from '@angular/material/chips';
     WithdrawalDetail,
     RouterLink,
     AsyncPipe,
-    DatePipe,
-    DecimalPipe,
     TransactionTypePipe,
     MatButtonModule,
     MatIconModule,
     MatCardModule,
     MatDividerModule,
-    MatChipsModule
+    MatChipsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   templateUrl: './basic-account-detail.html',
   styleUrl: './basic-account-detail.css'
@@ -39,7 +46,25 @@ export class BasicAccountDetail {
 
   id: string | null = this.route.snapshot.paramMap.get('id');
 
+  form = new FormGroup({
+    fullName: new FormControl<string>(''),
+    accountNumber: new FormControl<string>(''),
+    bankCode: new FormControl<string>(''),
+    issueDate: new FormControl<Date | null>(null),
+    amount: new FormControl<number | null>(null)
+  });
+
   tx$ = this.route.paramMap.pipe(
-    switchMap(params => this.svc.getTransactionDetail$(params.get('id')!))
+    switchMap(params => this.svc.getTransactionDetail$(params.get('id')!)),
+    tap((res) => {
+      const d = res.data;
+      this.form.patchValue({
+        fullName: d.fullName,
+        accountNumber: d.accountNumber,
+        bankCode: d.bankCode,
+        issueDate: d.issueDate ? new Date(d.issueDate) : null,
+        amount: d.amount
+      });
+    })
   );
 }
