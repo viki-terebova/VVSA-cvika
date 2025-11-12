@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using uloha3.Models;
+using uloha3.DatabaseModel;
 
 namespace uloha3.Repositories;
 
 public interface ITransationRepository
 {
-    List<Transation> GetAllTransations();
-    Transation? GetTransationById(int id);
+    List<Transaction> GetAllTransations();
+    Transaction? GetTransationById(int id);
 }

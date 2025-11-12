@@ -1,41 +1,45 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using uloha3.Models;
+using uloha3.DatabaseModel;
 
 namespace uloha3.Repositories;
 
 public class TransationRepository : ITransationRepository
 {
-    public List<Transation> Transations { get; } = new();
+    private readonly Whiyes5oContext context;
+    public List<Transaction> Transations { get; } = new();
 
-    public TransationRepository()
+    public TransationRepository(Whiyes5oContext context)
     {
-        Transations.Add(new Transation
+        this.context = context;
+
+        Transations.Add(new Transaction
         {
-            TransationId = 1,
-            FullName = "",
-            TransationType = TransationType.Incoming,
-            AccountNumber = "",
-            BankCode = "",
+            Id = 1,
+            TransactionTypeId = 1,
+            UserId = 1,
+            AccountNumber = string.Empty,
+            BankCode = string.Empty,
             IssueDate = DateTime.UtcNow,
-            Amount = 0
+            Amount = 0m
         });
 
-        Transations.Add(new Transation
+        Transations.Add(new Transaction
         {
-            TransationId = 2,
-            FullName = "",
-            TransationType = TransationType.Outgoing,
-            AccountNumber = "",
-            BankCode = "",
+            Id = 2,
+            TransactionTypeId = 2,
+            UserId = 1,
+            AccountNumber = string.Empty,
+            BankCode = string.Empty,
             IssueDate = DateTime.UtcNow,
-            Amount = 0
+            Amount = 0m
         });
     }
 
-    public List<Transation> GetAllTransations() => Transations;
+    public List<Transaction> GetAllTransations() => context.Transactions.ToList();
 
-    public Transation? GetTransationById(int id)
-        => Transations.FirstOrDefault(t => t.TransationId == id);
+    public Transaction? GetTransationById(int id)
+        => context.Transactions.FirstOrDefault(t => t.Id == id);
 }
+

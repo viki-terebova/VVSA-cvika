@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using uloha3.Services;
-using uloha3.Models;
+using uloha3.ViewModels;
 
 namespace uloha3.Controllers;
 
@@ -16,11 +16,11 @@ public class TransactionsController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<List<Transation>> GetAllTransations()
+    public ActionResult<List<TransactionViewModel>> GetAllTransations()
         => _service.GetAllTransations();
 
     [HttpGet("{id}")]
-    public ActionResult<Transation> GetTransationById(int id)
+    public ActionResult<TransactionViewModel> GetTransationById(int id)
     {
         var item = _service.GetTransationById(id);
         if (item is null) return NotFound();

@@ -1,6 +1,7 @@
 using Scalar.AspNetCore;
 using uloha3.Repositories;
 using uloha3.Services;
+using uloha3.DatabaseModel;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,7 @@ builder.Services.AddScoped<ITransationService, TransationService>();
 builder.Services.AddEndpointsApiExplorer();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddDbContext<Whiyes5oContext>();
 
 var app = builder.Build();
 
