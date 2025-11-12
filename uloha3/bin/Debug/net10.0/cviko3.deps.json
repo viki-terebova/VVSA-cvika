@@ -6,13 +6,13 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v10.0": {
-      "uloha3/1.0.0": {
+      "cviko3/1.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.OpenApi": "10.0.0-rc.2.25502.107",
           "Scalar.AspNetCore": "2.10.1"
         },
         "runtime": {
-          "uloha3.dll": {}
+          "cviko3.dll": {}
         }
       },
       "Microsoft.AspNetCore.OpenApi/10.0.0-rc.2.25502.107": {
@@ -45,7 +45,7 @@
     }
   },
   "libraries": {
-    "uloha3/1.0.0": {
+    "cviko3/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
