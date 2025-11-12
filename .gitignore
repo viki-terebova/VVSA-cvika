@@ -1,0 +1,6 @@
+# Ignore .NET build outputs
+**/bin/
+**/obj/
+
+# Visual Studio cache
+.vs/
