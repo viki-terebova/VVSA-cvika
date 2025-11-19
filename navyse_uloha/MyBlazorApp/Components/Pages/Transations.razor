@@ -1,3 +1,6 @@
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.EntityFrameworkCore
 @using MyBlazorApp.DatabaseModel
 
@@ -5,9 +8,31 @@
 
 @page "/transactions"
 
-@* <PageTitle>Transactions</PageTitle> *@
+<PageTitle>Transactions</PageTitle>
 
 <h1>Transactions</h1>
+
+<!-- Filter Section -->
+<div class="card mb-3">
+    <div class="card-body">
+        <EditForm method="post" Model="FilterForm" FormName="filter" OnValidSubmit="ApplyFilters">
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" />
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label for="filterMinAmount" class="form-label">Min Amount</label>
+                    <InputText type="text"
+                               id="filterMinAmount"
+                               @bind-Value="FilterForm.MinAmount"
+                               @oninput="OnMinAmountChanged"
+                               class="form-control" />
+                    <ValidationMessage For="() => FilterForm.MinAmount" class="text-danger" />
+                </div>
+            </div>
+        </EditForm>
+    </div>
+</div>
+
 <table class="table">
     <thead>
         <tr>
@@ -19,7 +44,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var transaction in TransactionsList)
+        @foreach (var transaction in FilteredTransactionsList)
         {
             <tr>
                 <td>@transaction.Id</td>
@@ -40,7 +65,15 @@
 
 
 @code {
-    private List<Transaction> TransactionsList {get; set;} = new();
+    [SupplyParameterFromForm]
+    public FilterFormDto FilterForm { get; set; } = null!;
+    private List<Transaction> TransactionsList { get; set; } = new();
+    private List<Transaction> FilteredTransactionsList { get; set; } = new();
+
+    protected override void OnInitialized()
+    {
+        FilterForm ??= new FilterFormDto();
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -50,5 +83,34 @@
             .Include(t => t.User)
             .OrderByDescending(t => t.Id)
             .ToListAsync();
+        FilteredTransactionsList = TransactionsList.ToList();
+    }
+
+    private Task OnMinAmountChanged(ChangeEventArgs e)
+    {
+        FilterForm.MinAmount = e.Value?.ToString();
+        ApplyFilters();
+        return Task.CompletedTask;
+    }
+
+    private void ApplyFilters()
+    {
+        if (!string.IsNullOrWhiteSpace(FilterForm.MinAmount) &&
+            decimal.TryParse(FilterForm.MinAmount, out var minAmount))
+        {
+            FilteredTransactionsList = TransactionsList
+                .Where(t => t.Amount >= minAmount)
+                .ToList();
+        }
+        else
+        {
+            FilteredTransactionsList = TransactionsList.ToList();
+        }
+    }
+
+    public class FilterFormDto
+    {
+        [Range(0, double.MaxValue, ErrorMessage = "Amount must be a positive number")]
+        public string? MinAmount { get; set; }
     }
 }
