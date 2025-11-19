@@ -1,0 +1,54 @@
+@using Microsoft.EntityFrameworkCore
+@using MyBlazorApp.DatabaseModel
+
+@inject IDbContextFactory<Whiyes5oContext> DbContextFactory
+
+@page "/transactions"
+
+@* <PageTitle>Transactions</PageTitle> *@
+
+<h1>Transactions</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Amount</th>
+            <th>User</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var transaction in TransactionsList)
+        {
+            <tr>
+                <td>@transaction.Id</td>
+                <td>@transaction.TransactionType?.Name</td>
+                <td>@transaction.Amount.ToString("C")</td>
+                <td>@transaction.User?.Name</td>
+                <td>
+                    <a href="/transaction/@transaction.Id" class="btn btn-sm btn-primary">
+                        View Detail 
+                    </a>
+                </td>
+                <td>Delete</td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+
+@code {
+    private List<Transaction> TransactionsList {get; set;} = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var dbContext = await DbContextFactory.CreateDbContextAsync();
+        TransactionsList = await dbContext.Transactions
+            .Include(t => t.TransactionType)
+            .Include(t => t.User)
+            .OrderByDescending(t => t.Id)
+            .ToListAsync();
+    }
+}
