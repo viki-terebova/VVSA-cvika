@@ -23,6 +23,7 @@ public class TransationService : ITransationService
             var vm = new TransactionViewModel
             {
                 transactionId = t.Id,
+                FullName = t.User.Name ?? string.Empty,
                 transactionType = t.TransactionTypeId,
                 accountNumber = t.AccountNumber,
                 bankCode = t.BankCode,
@@ -41,6 +42,7 @@ public class TransationService : ITransationService
         var vm = new TransactionViewModel
         {
             transactionId = t.Id,
+            FullName = t.User.Name ?? string.Empty,
             transactionType = t.TransactionTypeId,
             accountNumber = t.AccountNumber,
             bankCode = t.BankCode,

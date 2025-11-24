@@ -5,7 +5,7 @@ using uloha3.ViewModels;
 namespace uloha3.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class TransactionsController : ControllerBase
 {
     private readonly ITransationService _service;
@@ -17,13 +17,13 @@ public class TransactionsController : ControllerBase
 
     [HttpGet]
     public ActionResult<List<TransactionViewModel>> GetAllTransations()
-        => _service.GetAllTransations();
+       => Ok(new { data = _service.GetAllTransations()});
 
     [HttpGet("{id}")]
     public ActionResult<TransactionViewModel> GetTransationById(int id)
     {
         var item = _service.GetTransationById(id);
         if (item is null) return NotFound();
-        return item;
+        return Ok(new { data = item});
     }
 }

@@ -7,9 +7,13 @@ export class TransactionTypePipe implements PipeTransform {
       case 0:
         return 'DEBIT transaction';
       case 1:
-        return 'ATM withdrawal';
+        return 'Incoming';
+      case 2:
+        return 'Outgoing';
+      case 3:
+        return 'Withdrawal';
       default:
-        return '';
+        return 'Unknown';
     }
   }
 }

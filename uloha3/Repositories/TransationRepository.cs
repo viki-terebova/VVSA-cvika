@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using uloha3.DatabaseModel;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace uloha3.Repositories;
 
@@ -37,9 +39,9 @@ public class TransationRepository : ITransationRepository
         });
     }
 
-    public List<Transaction> GetAllTransations() => context.Transactions.ToList();
+    public List<Transaction> GetAllTransations() => context.Transactions.Include(t => t.User).ToList();
 
     public Transaction? GetTransationById(int id)
-        => context.Transactions.FirstOrDefault(t => t.Id == id);
+        => context.Transactions.Include(t => t.User).FirstOrDefault(t => t.Id == id);
 }
 
